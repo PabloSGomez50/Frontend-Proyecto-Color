@@ -11,6 +11,7 @@ header{
 
 .Navbar__logo{
   width:200px;
+  font-size: 32px;
 }
 
 .search{
@@ -60,16 +61,36 @@ header{
 
 .account__in{
   color: #144693;
-  background: rgb(248,239,239);
-  background: linear-gradient(117deg, rgba(248,239,239,1) 0%, rgba(255,255,255,0) 100%);
-  font-size: 18px;
+  background: linear-gradient(98.13deg, #F8EFEF 3.68%, rgba(248, 239, 239, 0) 97.67%);
+  border: 1px solid #000000;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  
 }
 
 .account__out{
   color: #000000;
-  background: rgb(61,197,255);
-  background: linear-gradient(117deg, rgba(61,197,255,1) 0%, rgb(61 197 255 / 23%) 73%, rgba(255,255,255,0) 100%);
-  font-size: 19px;
+  background: linear-gradient(100.48deg, #3DC5FF -0.18%, rgba(61, 197, 255, 0.21) 40.44%, rgba(61, 197, 255, 0) 99.82%);
+  border: 2px solid #2D2D2D;
+  border-radius: 6px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+
+
+
+
+
+
+
+
+
 
 

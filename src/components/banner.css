@@ -1,0 +1,86 @@
+.banner{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-family: 'Roboto', sans-serif;
+    
+    margin-top: 3em;
+    
+}
+
+.banner__center{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: linear-gradient(259.77deg, #C1CCD7 -0.58%, #375A7F 116.54%);
+    border: 1px solid rgba(0, 0, 0, 0.29);
+    box-shadow: 4px 4px 6px rgba(254, 236, 216, 0.93);
+    border-radius: 12px;
+    width: 628px;
+    height: 328px;
+    padding: .5em;
+}
+
+.banner__center__right__name{
+    font-size: 32px;
+    align-self: center;
+}
+
+.banner__left{
+    width: 90%;
+    height: 100%;
+    padding-right: .3em;
+}
+
+
+.banner__left__img{
+    height: 100%;
+    border-radius: 12px;
+}
+
+
+.banner__right{
+    display: flex;
+    flex-direction: column;
+    height: 80%;
+    width: 80%;
+    
+}
+
+.banner__right__name{
+    align-self: center;
+    font-size: 21px;
+    padding-bottom: .2em;
+}
+
+.banner__right__info__career {
+    font-size: 15px;
+    padding-bottom: 1em;
+}
+
+.banner__right__info__list{
+    font-size: 14px;
+    margin: .5em;
+}
+
+.banner__side{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #fff6f6;
+    border: 1px solid rgba(0, 0, 0, 0.29);
+    box-shadow: 4px 4px 6px rgba(254, 236, 216, 0.93);
+    border-radius: 12px;
+    width: 428px;
+    height: 228px;
+    padding: .5em;
+    
+}
+
+
+.banner__right__info__description{
+    padding-top: 1em;
+}
+
+
+
