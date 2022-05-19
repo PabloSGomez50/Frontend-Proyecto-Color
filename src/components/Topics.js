@@ -2,9 +2,9 @@ function Topics(){
     return(
         <div className="topics">
             <div className="topics__container">
-                <a href="#">New</a>
+                <a href="#">News</a>
                 <a href="#">electronic</a>
-                <a href="#">Sistems</a>
+                <a href="#">Systems</a>
                 <a href="#">Civil</a>
                 <a href="#">Industrial</a>
                 <a href="#">Chemical</a>
@@ -14,4 +14,4 @@ function Topics(){
     )
 }
 
-export default Topics   ;
+export default Topics;
