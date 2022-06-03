@@ -1,3 +1,4 @@
+import React from 'react';
 import avatar from './avatar.png'
 import project from './IoTProject.jpg'
 

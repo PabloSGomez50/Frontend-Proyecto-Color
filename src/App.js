@@ -112,7 +112,7 @@ function App() {
         <Route path='/:prop/:id' element={<TestCompontent />} />
       </Routes>
 
-      <div style={{width: '40%', padding: '5rem'}}>
+      <div>
         <NavBar />
         <Banner />
   
