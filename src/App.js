@@ -10,7 +10,7 @@ import NavBar from './components/NavBar';
 import Banner from './components/Banner';
 import Topics from './components/Topics';
 import Publication from './components/Publication';
-import LoginView from './components/auth/LoginView';
+import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
 import ApiService from './api/ApiService';
@@ -22,11 +22,11 @@ const apiService = new ApiService();
 
 function App() {
 
-  const [ title, setTitle ] = useState("");
-  const [ image, setImage ] = useState();
-  const [ csrfToken, setCsrfToken] = useState("");
-  const [ auth, setAuth ] = useState();
-  
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState();
+  const [csrfToken, setCsrfToken] = useState("");
+  const [auth, setAuth] = useState();
+
   const register = () => {
     apiService.register({
       // username: 'Rocio Gomez',
@@ -43,39 +43,40 @@ function App() {
   const login = () => {
     console.log(csrfToken);
     apiService.login({
-      username: 'Sol Pi', 
+      username: 'Sol Pi',
       password: 'prueba'
     }, csrfToken)
-    .then((data) => {
-      console.log(data);
-      setAuth(data.token)
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+      .then((data) => {
+        console.log(data);
+        setAuth(data.token)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
-  
+
   const getToken = () => {
     apiService.getCSRFToken()
-    .then(csrf => setCsrfToken(csrf));
+      .then(csrf => setCsrfToken(csrf));
   }
 
   const createProject = () => {
     apiService.createProj({
-      title: title, 
-      auth: auth, 
-      members: [{id: 4, username: 'Pablo'}, {id: 3, username: 'Sol'}]}, 
+      title: title,
+      auth: auth,
+      members: [{ id: 4, username: 'Pablo' }, { id: 3, username: 'Sol' }]
+    },
       image)
-    .then(data => console.log(data));
+      .then(data => console.log(data));
   }
 
   const edituser = () => {
     apiService.editUser({
       username: 'Pablo Gomez',
-      carrer: 'Electronic Engineer', 
+      carrer: 'Electronic Engineer',
       auth: auth
     }, image)
-    .then(data => console.log(data));
+      .then(data => console.log(data));
   }
 
   return (
@@ -85,45 +86,46 @@ function App() {
         <NavLink to='/'>Home</NavLink>
         <NavLink to='/profile/2'>Profile</NavLink>
         <NavLink to='/project/new'>Project 1</NavLink>
-        <NavLink to='/projects'>Projects</NavLink>
+        <NavLink to='/api'>API test</NavLink>
         <NavLink to='/login'>Login</NavLink>
         <NavLink to='/register'>Register</NavLink>
         <NavLink to='/components'>Components</NavLink>
       </nav>
 
-      <div>
-        <h3>Test API</h3>
-        <label>
-          Title
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-        </label>
-        <br/>
-        <label>
-          image
-          <input type="file" onChange={(e) => setImage(e.target.files)}/>
-        </label>
-        <br/>
-        <button onClick={createProject}>Send Image</button>
-        <button onClick={register}>Register</button>
-        <button onClick={login}>Login</button>
-        <button onClick={getToken}>Token</button>
-        <p>{csrfToken}</p>
-        <button onClick={edituser}>Edit user</button>
-      </div>
-      
       <Routes>
-        <Route element={<Home />}/>
-        <Route path='/login' element={<LoginView />}/>
-        <Route path='/register' element={<Register />}/>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/components' element={
           <div>
             <NavBar />
             <Banner />
-      
-            <Topics/>
-            <Publication/>
+
+            <Topics />
+            <Publication />
           </div>
-        }/>
+        } />
+        <Route path='/api' element={
+          <div>
+          <h3>Test API</h3>
+          <label>
+            Title
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+          </label>
+          <br />
+          <label>
+            image
+            <input type="file" onChange={(e) => setImage(e.target.files)} />
+          </label>
+          <br />
+          <button onClick={createProject}>Send Image</button>
+          <button onClick={register}>Register</button>
+          <button onClick={login}>Login</button>
+          <button onClick={getToken}>Token</button>
+          <p>{csrfToken}</p>
+          <button onClick={edituser}>Edit user</button>
+        </div>
+        } />
         <Route path='/:prop' element={<TestCompontent />} />
         <Route path='/:prop/:id' element={<TestCompontent />} />
       </Routes>
@@ -137,8 +139,8 @@ function TestCompontent() {
 
   return (
     <div>
-      <h2>Props: { prop }</h2>
-      {id ? <p>Id: { id }</p> : null}
+      <h2>Props: {prop}</h2>
+      {id ? <p>Id: {id}</p> : null}
     </div>
   );
 }

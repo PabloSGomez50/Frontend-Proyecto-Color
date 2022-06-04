@@ -9,7 +9,9 @@ const instance = axios.create({
     xsrfCookieName: 'csrftoken'
 });
 
-export default class ApiService{
+export default instance;
+
+export class ApiService{
 
     async getSession() {
         try {
