@@ -4,17 +4,21 @@ import './App.css';
 import './components/banner.css';
 import './components/topics.css';
 import './components/publication.css';
+
 import Home from './components/Home';
 import NavBar from './components/NavBar';
 import Banner from './components/Banner';
 import Topics from './components/Topics';
 import Publication from './components/Publication';
-import LoginView from './components/LoginView';
+import LoginView from './components/auth/LoginView';
+import Register from './components/auth/Register';
+
 import ApiService from './api/ApiService';
+
 import React, { useState } from 'react';
 import { NavLink, Routes, Route, useParams } from 'react-router-dom';
 
-const apiService = new ApiService()
+const apiService = new ApiService();
 
 function App() {
 
@@ -83,6 +87,8 @@ function App() {
         <NavLink to='/project/new'>Project 1</NavLink>
         <NavLink to='/projects'>Projects</NavLink>
         <NavLink to='/login'>Login</NavLink>
+        <NavLink to='/register'>Register</NavLink>
+        <NavLink to='/components'>Components</NavLink>
       </nav>
 
       <div>
@@ -108,17 +114,19 @@ function App() {
       <Routes>
         <Route element={<Home />}/>
         <Route path='/login' element={<LoginView />}/>
+        <Route path='/register' element={<Register />}/>
+        <Route path='/components' element={
+          <div>
+            <NavBar />
+            <Banner />
+      
+            <Topics/>
+            <Publication/>
+          </div>
+        }/>
         <Route path='/:prop' element={<TestCompontent />} />
         <Route path='/:prop/:id' element={<TestCompontent />} />
       </Routes>
-
-      <div>
-        <NavBar />
-        <Banner />
-  
-        <Topics/>
-        <Publication/>
-      </div>
 
     </div>
   );

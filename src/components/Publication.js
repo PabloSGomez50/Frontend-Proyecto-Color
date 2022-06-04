@@ -1,6 +1,6 @@
 import React from 'react';
-import avatar from './avatar.png'
-import project from './IoTProject.jpg'
+import avatar from '../img/avatar.png'
+import project from '../img/IoTProject.jpg'
 
 
 function Publication(){
