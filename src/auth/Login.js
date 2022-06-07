@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
-import axios from '../../api/ApiService';
+import axios from '../api/ApiService';
 import './auth.css';
 
 const LOG_URL = '/login';
@@ -12,7 +12,7 @@ function Login() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = "/";
+    const from = location.state?.from?.pathname || "/";
 
     const userRef = useRef();
     const errRef = useRef();
@@ -42,9 +42,12 @@ function Login() {
             );
             console.log(user, pwd);
             console.log(response.data);
+
             const accessToken = response.data.token;
             const data = response.data.user;
+            
             console.log(accessToken, data);
+
             setAuth({user, pwd, accessToken});
             setUser('');
             setPwd('');

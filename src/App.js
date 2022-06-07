@@ -1,4 +1,3 @@
-
 import './App.css';
 
 import './components/banner.css';
@@ -10,23 +9,25 @@ import NavBar from './components/NavBar';
 import Banner from './components/Banner';
 import Topics from './components/Topics';
 import Publication from './components/Publication';
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
-import RequireAuth from './components/auth/RequireAuth';
+import Login from './auth/Login';
+import Register from './auth/Register';
+import RequireAuth from './auth/RequireAuth';
 
 import ApiService from './api/ApiService';
 
-import React, { useState } from 'react';
+import React from 'react';
+import useAuth from './hooks/useAuth';
 import { Routes, Route, NavLink, useParams } from 'react-router-dom';
 
 const apiService = new ApiService();
 
 function App() {
 
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState();
-  const [csrfToken, setCsrfToken] = useState("");
-  const [auth, setAuth] = useState();
+  // const [title, setTitle] = useState("");
+  // const [image, setImage] = useState();
+  // const [csrfToken, setCsrfToken] = useState("");
+  // const [auth, setAuth] = useState();
+  const { setAuth } = useAuth();
 
   const register = () => {
     apiService.register({
@@ -41,44 +42,47 @@ function App() {
     })
   }
 
-  const login = () => {
-    console.log(csrfToken);
-    apiService.login({
-      username: 'Sol Pi',
-      password: 'prueba'
-    }, csrfToken)
-      .then((data) => {
-        console.log(data);
-        setAuth(data.token)
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+  const logout = () => {
+    setAuth({});
   }
+  // const login = () => {
+  //   console.log(csrfToken);
+  //   apiService.login({
+  //     username: 'Sol Pi',
+  //     password: 'prueba'
+  //   }, csrfToken)
+  //     .then((data) => {
+  //       console.log(data);
+  //       setAuth(data.token)
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }
 
-  const getToken = () => {
-    apiService.getCSRFToken()
-      .then(csrf => setCsrfToken(csrf));
-  }
+  // const getToken = () => {
+  //   apiService.getCSRFToken()
+  //     .then(csrf => setCsrfToken(csrf));
+  // }
 
-  const createProject = () => {
-    apiService.createProj({
-      title: title,
-      auth: auth,
-      members: [{ id: 4, username: 'Pablo' }, { id: 3, username: 'Sol' }]
-    },
-      image)
-      .then(data => console.log(data));
-  }
+  // const createProject = () => {
+  //   apiService.createProj({
+  //     title: title,
+  //     auth: auth,
+  //     members: [{ id: 4, username: 'Pablo' }, { id: 3, username: 'Sol' }]
+  //   },
+  //     image)
+  //     .then(data => console.log(data));
+  // }
 
-  const edituser = () => {
-    apiService.editUser({
-      username: 'Pablo Gomez',
-      carrer: 'Electronic Engineer',
-      auth: auth
-    }, image)
-      .then(data => console.log(data));
-  }
+  // const edituser = () => {
+  //   apiService.editUser({
+  //     username: 'Pablo Gomez',
+  //     carrer: 'Electronic Engineer',
+  //     auth: auth
+  //   }, image)
+  //     .then(data => console.log(data));
+  // }
 
 
   return (
@@ -104,7 +108,7 @@ function App() {
             <div>
               <NavBar />
               <Banner />
-
+              
               <Topics />
               <Publication />
             </div>
@@ -112,7 +116,8 @@ function App() {
           <Route path='/api' element={
             <div>
               <h3>Test API</h3>
-              <label>
+              <button onClick={logout}>Sign Out!</button>
+              {/* <label>
                 Title
                 <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
               </label>
@@ -127,7 +132,7 @@ function App() {
               <button onClick={login}>Login</button>
               <button onClick={getToken}>Token</button>
               <p>{csrfToken}</p>
-              <button onClick={edituser}>Edit user</button>
+              <button onClick={edituser}>Edit user</button> */}
             </div>
           } />
         </Route>
