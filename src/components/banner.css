@@ -53,6 +53,10 @@
     padding-bottom: .2em;
 }
 
+.banner__right__info {
+    overflow: hidden;
+}
+
 .banner__right__info__career {
     font-size: 15px;
     padding-bottom: 1em;

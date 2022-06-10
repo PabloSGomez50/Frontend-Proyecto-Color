@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import useInput from '../hooks/useInput';
+import useToggle from '../hooks/useToggle';
 
 import useAuth from '../hooks/useAuth';
-import axios from '../api/ApiService';
+import axios from '../api/axios';
 import './auth.css';
 
 const LOG_URL = '/login';
@@ -17,9 +19,10 @@ function Login() {
     const userRef = useRef();
     const errRef = useRef();
 
-    const [user, setUser] = useState('');
+    const [user, resetUser, userAttribute] = useInput('user','');
     const [pwd, setPwd] = useState('');
     const [errMsg, setErrMsg] = useState('');
+    const [check, toggleCheck] = useToggle('persist', false);
 
     useEffect(() => {
         userRef.current.focus();
@@ -45,11 +48,12 @@ function Login() {
 
             const accessToken = response.data.token;
             const data = response.data.user;
+            // const id = data.id;
             
-            console.log(accessToken, data);
+            console.log(accessToken, data); // , id
 
-            setAuth({user, pwd, accessToken});
-            setUser('');
+            setAuth({user, pwd, accessToken}); // id, 
+            resetUser();
             setPwd('');
             navigate(from, { replace: true });
 
@@ -68,6 +72,13 @@ function Login() {
 
     }
 
+    // const togglePersist = () => {
+    //     setPersist(prev => !prev);
+    // }
+    // useEffect(() => {
+    //     localStorage.setItem('persist', persist);
+    // }, [persist])
+
     return (
         <section>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
@@ -79,8 +90,9 @@ function Login() {
                     id="username"
                     ref={userRef}
                     autoComplete="off"
-                    onChange={(e) => setUser(e.target.value)}
-                    value={user}
+                    {...userAttribute}
+                    // onChange={(e) => setUser(e.target.value)}
+                    // value={user}
                     required
                 />
 
@@ -93,6 +105,15 @@ function Login() {
                     required
                 />
                 <button>Sign In</button>
+                <div className='persistCheck'>
+                    <input
+                        type='checkbox'
+                        id='persist'
+                        onChange={toggleCheck}
+                        checked={check}
+                    />
+                    <label htmlFor='persist'>Trust This Device</label>
+                </div>
             </form>
             <p>
                 Need an Account?<br />

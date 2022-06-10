@@ -4,86 +4,48 @@ import './components/banner.css';
 import './components/topics.css';
 import './components/publication.css';
 
-import Home from './components/Home';
+// Components imports
+import Home from './components_p/Home';
+import Profile from './components_p/Profile';
 import NavBar from './components/NavBar';
 import Banner from './components/Banner';
 import Topics from './components/Topics';
 import Publication from './components/Publication';
+// Auth imports 
 import Login from './auth/Login';
 import Register from './auth/Register';
 import RequireAuth from './auth/RequireAuth';
 
-import ApiService from './api/ApiService';
+import PersistLogin from './components_p/PersistLogin';
+import axios from './api/axios'
 
 import React from 'react';
-import useAuth from './hooks/useAuth';
-import { Routes, Route, NavLink, useParams } from 'react-router-dom';
+import useLogout from './hooks/useLogout';
+import { Routes, Route, NavLink, useParams, useNavigate } from 'react-router-dom';
 
-const apiService = new ApiService();
+
+// const sol = {username: 'Sol Pi', email: 'sol@gmail.com', password: 'prueba'};
+// const rocio = {username: 'Rocio Gomez', email: 'rocio@gmail.com', password: 'vamosBoca'}
 
 function App() {
+  const navigate = useNavigate();
+  const logout = useLogout();
 
-  // const [title, setTitle] = useState("");
-  // const [image, setImage] = useState();
-  // const [csrfToken, setCsrfToken] = useState("");
-  // const [auth, setAuth] = useState();
-  const { setAuth } = useAuth();
-
-  const register = () => {
-    apiService.register({
-      // username: 'Rocio Gomez',
-      // email: 'rocio@gmail.com',
-      // password: 'vamosBoca',
-      // confirmation: 'vamosBoca'
-      username: 'Sol Pi',
-      email: 'sol@gmail.com',
-      password: 'prueba',
-      confirmation: 'prueba'
-    })
+  const signOut = async () => {
+    await logout();
+    navigate('/');
   }
 
-  const logout = () => {
-    setAuth({});
+  const getcsrf = async () => {
+    try {
+      const response = await axios('/csrf', {
+        withCredentials: true
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.error(err);
+    }
   }
-  // const login = () => {
-  //   console.log(csrfToken);
-  //   apiService.login({
-  //     username: 'Sol Pi',
-  //     password: 'prueba'
-  //   }, csrfToken)
-  //     .then((data) => {
-  //       console.log(data);
-  //       setAuth(data.token)
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }
-
-  // const getToken = () => {
-  //   apiService.getCSRFToken()
-  //     .then(csrf => setCsrfToken(csrf));
-  // }
-
-  // const createProject = () => {
-  //   apiService.createProj({
-  //     title: title,
-  //     auth: auth,
-  //     members: [{ id: 4, username: 'Pablo' }, { id: 3, username: 'Sol' }]
-  //   },
-  //     image)
-  //     .then(data => console.log(data));
-  // }
-
-  // const edituser = () => {
-  //   apiService.editUser({
-  //     username: 'Pablo Gomez',
-  //     carrer: 'Electronic Engineer',
-  //     auth: auth
-  //   }, image)
-  //     .then(data => console.log(data));
-  // }
-
 
   return (
     <div className="App">
@@ -96,6 +58,8 @@ function App() {
         <NavLink to='/login'>Login</NavLink>
         <NavLink to='/register'>Register</NavLink>
         <NavLink to='/components'>Components</NavLink>
+        <button onClick={signOut}>Sign Out!</button>
+        <button onClick={getcsrf}>Get csrf!</button>
       </nav>
 
       <Routes>
@@ -103,38 +67,42 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
 
-        <Route element={<RequireAuth />}>
-          <Route path='/components' element={
-            <div>
-              <NavBar />
-              <Banner />
-              
-              <Topics />
-              <Publication />
-            </div>
-          } />
-          <Route path='/api' element={
-            <div>
-              <h3>Test API</h3>
-              <button onClick={logout}>Sign Out!</button>
-              {/* <label>
-                Title
-                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-              </label>
-              <br />
-              <label>
-                image
-                <input type="file" onChange={(e) => setImage(e.target.files)} />
-              </label>
-              <br />
-              <button onClick={createProject}>Send Image</button>
-              <button onClick={register}>Register</button>
-              <button onClick={login}>Login</button>
-              <button onClick={getToken}>Token</button>
-              <p>{csrfToken}</p>
-              <button onClick={edituser}>Edit user</button> */}
-            </div>
-          } />
+        <Route element={<PersistLogin />}>
+          <Route element={<RequireAuth />}>
+            <Route path='/profile/:userId' element={<Profile />} />
+
+            <Route path='/components' element={
+              <div>
+                <NavBar />
+                <Banner />
+
+                <Topics />
+                <Publication />
+              </div>
+            } />
+
+            <Route path='/api' element={
+              <div>
+                <h3>Test API</h3>
+                {/* <label>
+                  Title
+                  <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                </label>
+                <br />
+                <label>
+                  image
+                  <input type="file" onChange={(e) => setImage(e.target.files)} />
+                </label>
+                <br />
+                <button onClick={createProject}>Send Image</button>
+                <button onClick={register}>Register</button>
+                <button onClick={login}>Login</button>
+                <button onClick={getToken}>Token</button>
+                <p>{csrfToken}</p>
+                <button onClick={edituser}>Edit user</button> */}
+              </div>
+            } />
+          </Route>
         </Route>
 
         <Route path='/:prop' element={<TestCompontent />} />

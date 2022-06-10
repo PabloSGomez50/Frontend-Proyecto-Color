@@ -23,7 +23,13 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh; 
-  padding: 1rem 0.5rem;
+  padding: 1rem 0rem;
+}
+
+div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 section {

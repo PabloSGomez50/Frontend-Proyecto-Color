@@ -75,5 +75,7 @@
 
 .publication__right__top__description{
     line-height: 1.5em;
+    font-size: 14px;
+    overflow: scroll;
 }
 
