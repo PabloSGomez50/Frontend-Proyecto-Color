@@ -63,23 +63,24 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={
+          <Home />
+        } />
+        <Route path='/components' element={
+              <div>
+                <NavBar />
+                <Banner />
+                
+                <Topics />
+                <Publication />
+              </div>
+        } />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
 
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth />}>
             <Route path='/profile/:userId' element={<Profile />} />
-
-            <Route path='/components' element={
-              <div>
-                <NavBar />
-                <Banner />
-
-                <Topics />
-                <Publication />
-              </div>
-            } />
 
             <Route path='/api' element={
               <div>

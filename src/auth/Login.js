@@ -26,6 +26,9 @@ function Login() {
 
     useEffect(() => {
         userRef.current.focus();
+        if (check) {
+            
+        }
     }, [])
 
     useEffect(() => {
