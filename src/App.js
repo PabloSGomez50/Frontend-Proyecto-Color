@@ -71,7 +71,7 @@ function App() {
           <Home />
         } />
         <Route path='/components' element={
-              <div>
+              <div className='container'>
                 <NavBar />
                 <Banner />
                 
