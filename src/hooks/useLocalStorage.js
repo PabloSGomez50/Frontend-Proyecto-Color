@@ -13,9 +13,7 @@ function getLocalValue(key, initValue) {
 }
 
 function useLocalstorage(key, initValue) {
-    const [value, setValue] = useState(() => {
-        return getLocalValue(key, initValue);
-    });
+    const [value, setValue] = useState(() => getLocalValue(key, initValue));
 
     useEffect(() => {
         localStorage.setItem(key, JSON.stringify(value));

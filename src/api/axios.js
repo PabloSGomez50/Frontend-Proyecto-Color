@@ -19,42 +19,6 @@ export const axiosPrivate = axios.create({
 
 // class ApiService{
 
-//     async getSession() {
-//         try {
-//             const response = await instance.get('/session');
-//             const data = response.data;
-//             if (!data.isAuth) {
-//                 return this.getCSRFToken();
-//             }
-//             return data;
-//         }
-//         catch (err) {
-//             console.error(err);
-//         }
-//     }
-
-//     async getCSRFToken() {
-//         try {
-//             const response = await instance.get('/csrf');
-//             const data = await response.headers;
-//             console.log(data['x-csrftoken']);
-//             return data['x-csrftoken'];
-//         }
-//         catch (err) {
-//             console.error(err);
-//         }
-//     }
-
-//     async register(data) {
-//         try {
-//             const response = await instance.post('/register', data);
-//             return response.data;
-//         }
-//         catch (err) {
-//             console.error(err.response.data.error);
-//         }
-//     }
-
 //     async login(dat, token) {
 //         try {
 //             const uData = new FormData();
@@ -84,25 +48,6 @@ export const axiosPrivate = axios.create({
 //         }
 //     }
 
-//     async getProjList(url = '/project_list?page=1'){
-//         try {
-//             const response = await instance.get(url);
-//             return response.data;
-//         }
-//         catch (err) {
-//             console.error(err);
-//         }
-//     }
-
-//     async getProj(pk){
-//         try {
-//             const response = await instance.get(`/project/${pk}`);
-//             return response.data;
-//         }
-//         catch (err) {
-//             console.error(err);
-//         }
-//     }
 
 //     async modProj(pk, _data = 
 //         {

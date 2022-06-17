@@ -11,6 +11,9 @@ import NavBar from './components/NavBar';
 import Banner from './components/Banner';
 import Topics from './components/Topics';
 import Publication from './components/Publication';
+
+import UserForm from './components_p/UserForm';
+
 // Auth imports 
 import Login from './auth/Login';
 import Register from './auth/Register';
@@ -24,7 +27,7 @@ import useLogout from './hooks/useLogout';
 import { Routes, Route, NavLink, useParams, useNavigate } from 'react-router-dom';
 
 
-// const sol = {username: 'Sol Pi', email: 'sol@gmail.com', password: 'prueba'};
+// const sol = {username: 'SolPi', email: 'sol@gmail.com', password: 'prueba'};
 // const rocio = {username: 'Rocio Gomez', email: 'rocio@gmail.com', password: 'vamosBoca'}
 
 function App() {
@@ -38,7 +41,7 @@ function App() {
 
   const getcsrf = async () => {
     try {
-      const response = await axios('/csrf', {
+      const response = await axios('/refresh', {
         withCredentials: true
       });
       console.log(response.data);
@@ -60,6 +63,7 @@ function App() {
         <NavLink to='/components'>Components</NavLink>
         <button onClick={signOut}>Sign Out!</button>
         <button onClick={getcsrf}>Get csrf!</button>
+        <NavLink to='/user_edit'>Edit User</NavLink>
       </nav>
 
       <Routes>
@@ -108,11 +112,14 @@ function App() {
 
         <Route path='/:prop' element={<TestCompontent />} />
         <Route path='/:prop/:id' element={<TestCompontent />} />
+        <Route path='/user_edit' element={<UserForm />} />
       </Routes>
 
     </div>
   );
 }
+
+export default App;
 
 function TestCompontent() {
   let { id, prop } = useParams();
@@ -124,5 +131,3 @@ function TestCompontent() {
     </div>
   );
 }
-
-export default App;

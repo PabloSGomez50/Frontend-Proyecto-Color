@@ -11,10 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <AuthProvider>
-      <App/>
+      <App />
     </AuthProvider>
   </BrowserRouter>
-  // React.StrictMode
 );
 
 // If you want to start measuring performance in your app, pass a function

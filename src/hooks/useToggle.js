@@ -3,9 +3,9 @@ import useLocalstorage from "./useLocalStorage";
 function useToggle(key, initValue) {
     const [value, setValue] = useLocalstorage(key, initValue);
 
-    const toggle = (value) => {
+    const toggle = (prop) => {
         setValue(prev => {
-            return typeof value === 'boolean' ? value : !prev;
+            return typeof prop === 'boolean' ? prop : !prev;
         })
     }
 

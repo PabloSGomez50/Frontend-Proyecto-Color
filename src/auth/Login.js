@@ -4,7 +4,7 @@ import useInput from '../hooks/useInput';
 import useToggle from '../hooks/useToggle';
 
 import useAuth from '../hooks/useAuth';
-import axios from '../api/axios';
+import { axiosPrivate } from '../api/axios';
 import './auth.css';
 
 const LOG_URL = '/login';
@@ -14,7 +14,7 @@ function Login() {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || '/';
 
     const userRef = useRef();
     const errRef = useRef();
@@ -24,11 +24,15 @@ function Login() {
     const [errMsg, setErrMsg] = useState('');
     const [check, toggleCheck] = useToggle('persist', false);
 
+    const verifyPersist = () => {
+        if (!check) {
+            resetUser();
+        }
+    }
+
     useEffect(() => {
         userRef.current.focus();
-        if (check) {
-            
-        }
+        verifyPersist();
     }, [])
 
     useEffect(() => {
@@ -39,23 +43,20 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post(
+            const response = await axiosPrivate.post(
                 LOG_URL,
-                JSON.stringify({ username: user, password: pwd }),
-                {
-                    headers: { 'Content-Type': 'application/json' }
-                }
+                JSON.stringify({ username: user, password: pwd })
             );
+
             console.log(user, pwd);
             console.log(response.data);
 
             const accessToken = response.data.token;
-            const data = response.data.user;
-            // const id = data.id;
+            const _user = response.data.user;
             
-            console.log(accessToken, data); // , id
+            console.log(accessToken, _user); 
 
-            setAuth({user, pwd, accessToken}); // id, 
+            setAuth({'user': _user, accessToken}); 
             resetUser();
             setPwd('');
             navigate(from, { replace: true });
@@ -75,34 +76,25 @@ function Login() {
 
     }
 
-    // const togglePersist = () => {
-    //     setPersist(prev => !prev);
-    // }
-    // useEffect(() => {
-    //     localStorage.setItem('persist', persist);
-    // }, [persist])
-
     return (
         <section>
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+            <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
             <h1>Sign In</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
+                <label htmlFor='username'>Username:</label>
                 <input
-                    type="text"
-                    id="username"
+                    type='text'
+                    id='username'
                     ref={userRef}
-                    autoComplete="off"
+                    autoComplete='off'
                     {...userAttribute}
-                    // onChange={(e) => setUser(e.target.value)}
-                    // value={user}
                     required
                 />
 
-                <label htmlFor="password">Password:</label>
+                <label htmlFor='password'>Password:</label>
                 <input
-                    type="password"
-                    id="password"
+                    type='password'
+                    id='password'
                     onChange={(e) => setPwd(e.target.value)}
                     value={pwd}
                     required
@@ -120,8 +112,8 @@ function Login() {
             </form>
             <p>
                 Need an Account?<br />
-                <span className="line">
-                    <Link to="/register">Sign up</Link>
+                <span className='line'>
+                    <Link to='/register'>Sign up</Link>
                 </span>
             </p>
         </section>

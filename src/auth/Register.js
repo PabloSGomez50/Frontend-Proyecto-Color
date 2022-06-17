@@ -7,10 +7,10 @@ import './auth.css';
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/; // (?=.*[!@#$%])
-const MAIL_REGEX = /^(?=.*[a-z])(?=.*\d).{4,10}@.+\..{2,4}$/;
+const MAIL_REGEX = /^(?=[a-z]*)(?=\d*).{4,10}@.+\..{2,4}$/;
 const REGISTER_URL = '/register';
 
-function Register() {
+const Register = () => {
     const { setAuth } = useAuth();
 
     const navigate = useNavigate();
@@ -46,23 +46,21 @@ function Register() {
 
     useEffect(() => {
         const result = USER_REGEX.test(user);
-        console.log(`The user regex valitaion is ${result}.`);
+        // console.log(`The user regex valitaion is ${result}.`);
         setValidName(result);
     }, [user])
 
     useEffect(() => {
         const result = MAIL_REGEX.test(mail);
-        console.log(`The mail regex valitaion is ${result}.`);
+        // console.log(`The mail regex valitaion is ${result}.`);
         setValidMail(result);
     }, [mail])
 
     useEffect(() => {
-        const result = PWD_REGEX.test(pwd);
-        console.log(`The password regex valitaion is ${result}.`);
-        setValidPwd(result);
-        const match = pwd === matchPwd;
-        console.log(`The password match is ${match}.`);
-        setValidMatch(match);
+        // Set valid password with the response of the regex test
+        setValidPwd(PWD_REGEX.test(pwd));
+        // Checks if both password are the same
+        setValidMatch(pwd === matchPwd);
     }, [pwd, matchPwd])
 
     useEffect(() => {
@@ -96,11 +94,12 @@ function Register() {
             console.log(user, pwd);
 
             const data = response?.data;
-            const accessToken = data?.token;
+            const accessToken = data.token;
+            const _user = data.user;
 
             console.log(data, accessToken);
 
-            setAuth({user, pwd, accessToken});
+            setAuth({'user': _user, accessToken});
             setUser('');
             setPwd('');
             setMatchPwd('');
