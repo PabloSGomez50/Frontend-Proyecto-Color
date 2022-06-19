@@ -107,12 +107,12 @@ function App() {
                 <button onClick={edituser}>Edit user</button> */}
               </div>
             } />
+            <Route path='/user_edit' element={<UserForm />} />
           </Route>
         </Route>
 
         <Route path='/:prop' element={<TestCompontent />} />
         <Route path='/:prop/:id' element={<TestCompontent />} />
-        <Route path='/user_edit' element={<UserForm />} />
       </Routes>
 
     </div>

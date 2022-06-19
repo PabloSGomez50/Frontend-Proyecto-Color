@@ -3,45 +3,50 @@ import { axiosPrivate } from '../api/axios';
 import useAuth from '../hooks/useAuth';
 
 const USER_EDIT = '/edit_user';
+const MAIL_REGEX = /.+/ ///^(?=[a-z]*)(?=\d*).{4,10}@.+\..{2,4}$/;
 
 function UserForm() {
 
     const { auth } = useAuth();
+
+    const [ username, setName ] = useState('');
+    const [ career, setCareer ] = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ description, setDesc ] = useState('');
+
     const [ files, setFiles ] = useState([]);
     const [ imgs, setImgs ] = useState([]);
-
-    const handleFiles = (e) => {
-        console.log(e.target.files);
-        setFiles(e.target.files);
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        let payload = new FormData();
-        payload.set('auth', auth.accessToken);
-        payload.set('files', files);
-        console.log(e.target.elements.fileElem.files);
-        const response = await axiosPrivate.post(
-            USER_EDIT,
-            payload
-            // JSON.stringify({'auth': auth.accessToken})
-        );
-        const data = await response.data;
-        console.log(data);
-    }
-
+    
     const handleDrop = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        const data = e.dataTransfer;
-        const _files = data.files;
-        console.log(_files);
         if (e.target.classList.contains("dropzone")) {
             e.target.classList.remove("dragover");
         }
-        setFiles(_files);
+        console.log(e.dataTransfer.files);
+        setFiles(e.dataTransfer.files);
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const inputs = JSON.stringify({username, career, email, description, 
+            // 'numero': 40
+        });
+        let payload = new FormData();
+
+        payload.set('profile_img', files[0]);
+        for (let i = 1; i < files.length; i++) {
+            payload.set(i, files[i]);
+        }
+        payload.set('auth', auth.accessToken);
+        payload.set('data', inputs);
+        const response = await axiosPrivate.post(
+            USER_EDIT,
+            payload
+        );
+        const data = await response.data;
+        console.log(data);
     }
 
     useEffect(() => {
@@ -49,7 +54,6 @@ function UserForm() {
         const arr = [];
         for (const file of files) {
             const url = URL.createObjectURL(file);
-            console.log(url);
             arr.push({url, name: file.name});
         }
         console.log(arr);
@@ -62,7 +66,41 @@ function UserForm() {
     return (
         <form onSubmit={handleSubmit}>
             
-            <label htmlFor='fileElem'>
+            <label htmlFor='username'>Username:</label>
+            <input 
+                id='username'
+                type='text'
+                value={username}
+                onChange={(e) => setName(e.target.value)}
+            />
+
+            <label htmlFor='career'>Career:</label>
+            <input 
+                id='career'
+                type='text'
+                value={career}
+                onChange={(e) => setCareer(e.target.value)}
+            />
+            
+            <label htmlFor='email'>Email:</label>
+            <input 
+                id='email'
+                type='email'
+                // pattern={MAIL_REGEX}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <label htmlFor='description'>Description: </label>
+
+            <textarea
+                id='description'
+                maxLength={256}
+                value={description}
+                onChange={(e) => setDesc(e.target.value)}
+            />
+
+            <label htmlFor='imgProf'>
                 <div 
                     className='dropzone' 
                     onDrop={handleDrop}
@@ -84,27 +122,28 @@ function UserForm() {
                             e.target.classList.remove("dragover");
                         }
                     }}
-                >Files</div>
+                >Profile image</div>
             </label>
             <input
-                onChange={handleFiles} 
+                onChange={(e) => {console.log(e.target.files); setFiles(e.target.files);}} 
                 type='file'
-                id='fileElem'
-                name='fileElem'
-                multiple 
+                id='imgProf'
+                name='imgProf'
+                // multiple
                 accept='image/*'
                 hidden
             />
+
             <button>Update User</button>
             <div>
                 {imgs ? 
-                imgs.map((data, i) => <img 
-                    src={data.url} 
-                    key={i} 
-                    alt={data.name}
-                    height='240'
-                    onLoad={() => {URL.revokeObjectURL(data.url)}}
-                />)
+                    imgs.map((data, i) => <img 
+                        src={data.url} 
+                        key={i} 
+                        alt={data.name}
+                        height='240'
+                        onLoad={() => {URL.revokeObjectURL(data.url)}}
+                    />)
                  : <p>No imgs Selected</p>}
             </div>
         </form>
