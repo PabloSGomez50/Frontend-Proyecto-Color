@@ -44,7 +44,7 @@ function Profile() {
             ? (<>{Object.keys(user).map((atribute) => <h4 key={atribute}>{user[atribute]}</h4>)}</>)
             : <p>No user to display.</p>}
 
-            {projects?.length
+            {projects // ?.length
             ? (<ul>
                 {projects.map((project, i) => <li key={i}>{project?.title}</li>)}
             </ul>)
