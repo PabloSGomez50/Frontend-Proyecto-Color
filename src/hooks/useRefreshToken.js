@@ -9,8 +9,6 @@ function useRefreshToken() {
             withCredentials: true
         });
         setAuth(prev => {
-            // console.log(JSON.stringify(prev));
-            // console.log(response.data?.accessToken);
             return {...prev,
                 user: response.data?.user, 
                 group: response.data?.group,

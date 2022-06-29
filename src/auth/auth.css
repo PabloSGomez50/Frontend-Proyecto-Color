@@ -17,11 +17,7 @@ body {
     background-color: dodgerblue;
 }
 
-
-
-
-
-section {
+.auth-section {
     width: 100%;
     max-width: 420px;
     min-height: 400px;
@@ -42,7 +38,7 @@ form {
     padding-bottom: 1rem;
 }
 
-a, a:visited {
+.auth-a, .auth-a:visited {
     background-color: gainsboro;
     color: rgb(18, 28, 39);
     margin: auto 0.5rem;
@@ -114,9 +110,3 @@ button {
     display: inline-block;
 }
 
-nav {
-    height: 2.5rem;
-    display: flex;
-    justify-content: center;
-    padding: 0.3em 0em;
-}

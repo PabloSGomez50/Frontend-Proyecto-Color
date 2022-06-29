@@ -1,0 +1,26 @@
+.dropdown {
+    width: fit-content;
+    display: inline-block;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.dropdown-content {
+    position: absolute;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    background-color: white;
+    border: solid black 1px;
+    border-radius: 16px;
+}
+
+.dropdown-content p:hover {
+    background-color: gray;
+    cursor: default;
+}
+
+.hidden {
+    display: none;
+}

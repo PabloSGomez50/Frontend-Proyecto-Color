@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { axiosPrivate } from '../api/axios';
 import useAuth from '../hooks/useAuth';
+import InputFiles from '../components_p/InputFiles';
+import { useNavigate } from 'react-router-dom';
 
 const USER_EDIT = '/edit_user';
 const MAIL_REGEX = /.+/ ///^(?=[a-z]*)(?=\d*).{4,10}@.+\..{2,4}$/;
@@ -8,25 +10,16 @@ const MAIL_REGEX = /.+/ ///^(?=[a-z]*)(?=\d*).{4,10}@.+\..{2,4}$/;
 function UserForm() {
 
     const { auth } = useAuth();
+    const navigate = useNavigate();
+    const user = auth.user;
 
-    const [ username, setName ] = useState('');
-    const [ career, setCareer ] = useState('');
+    const [ username, setName ] = useState(user.name);
+    const [ career, setCareer ] = useState(user.career);
     const [ email, setEmail ] = useState('');
-    const [ description, setDesc ] = useState('');
+    const [ description, setDesc ] = useState(user.description);
 
     const [ files, setFiles ] = useState([]);
     const [ imgs, setImgs ] = useState([]);
-    
-    const handleDrop = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (e.target.classList.contains("dropzone")) {
-            e.target.classList.remove("dragover");
-        }
-        console.log(e.dataTransfer.files);
-        setFiles(e.dataTransfer.files);
-    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,12 +34,18 @@ function UserForm() {
         }
         payload.set('auth', auth.accessToken);
         payload.set('data', inputs);
-        const response = await axiosPrivate.post(
-            USER_EDIT,
-            payload
-        );
-        const data = await response.data;
-        console.log(data);
+        try {
+            const response = await axiosPrivate.post(
+                USER_EDIT,
+                payload
+            );
+            const data = await response.data;
+            console.log(data);
+            navigate(`/profile/${user.id}`);
+        } catch (err) {
+            console.error(err);
+        }
+        
     }
 
     useEffect(() => {
@@ -70,6 +69,7 @@ function UserForm() {
             <input 
                 id='username'
                 type='text'
+                // pattern=''
                 value={username}
                 onChange={(e) => setName(e.target.value)}
             />
@@ -86,7 +86,7 @@ function UserForm() {
             <input 
                 id='email'
                 type='email'
-                // pattern={MAIL_REGEX}
+                pattern={MAIL_REGEX}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
@@ -95,46 +95,21 @@ function UserForm() {
 
             <textarea
                 id='description'
-                maxLength={256}
+                maxLength={512}
                 value={description}
                 onChange={(e) => setDesc(e.target.value)}
             />
 
-            <label htmlFor='imgProf'>
-                <div 
-                    className='dropzone' 
-                    onDrop={handleDrop}
-                    onDragEnter={e => {
-                        e.stopPropagation(); 
-                        e.preventDefault();
-                        if (e.target.classList.contains("dropzone")) {
-                            e.target.classList.add("dragover");
-                        }
-                    }}
-                    onDragOver={e => {
-                        e.stopPropagation(); 
-                        e.preventDefault();
-                    }}
-                    onDragLeave={e => {
-                        e.stopPropagation(); 
-                        e.preventDefault();
-                        if (e.target.classList.contains("dropzone")) {
-                            e.target.classList.remove("dragover");
-                        }
-                    }}
-                >Profile image</div>
-            </label>
-            <input
-                onChange={(e) => {console.log(e.target.files); setFiles(e.target.files);}} 
-                type='file'
-                id='imgProf'
-                name='imgProf'
-                // multiple
+            <InputFiles 
+                id='imgProf' 
+                label='Profile image' 
+                multiple={true} 
                 accept='image/*'
-                hidden
+                setValue={setFiles} 
             />
 
             <button>Update User</button>
+            {/* <input type='color' /> */}
             <div>
                 {imgs ? 
                     imgs.map((data, i) => <img 

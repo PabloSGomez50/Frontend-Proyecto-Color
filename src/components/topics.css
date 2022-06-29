@@ -22,7 +22,7 @@
 
 }
 
-a{
+a[href='#']{
     text-decoration: none;
     color: black;
     font-family: 'roboto';

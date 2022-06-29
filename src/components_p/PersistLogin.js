@@ -28,9 +28,11 @@ function PersistLogin() {
         !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
 
         return () => isMounted = false;
+        // eslint-disable-next-line
     }, [])
 
-
+    // Only for development
+    // wrap this to better behavior
     useEffect(() => {
         console.log(`isLoading: ${isLoading}`);
         console.log(`auth: ${JSON.stringify(auth)}`);

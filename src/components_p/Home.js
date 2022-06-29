@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../api/axios';
-import ProjectCard from './ProjectCard';
+import ProjectCard from '../com_projects/ProjectCard';
+
+import './Components.css';
 
 const PROJECT_URL = '/project_list';
 
@@ -30,9 +32,14 @@ function Home() {
 
     return (
         <div>
-            <h3>This is the Home Page</h3>
+            {/* <h3>This is the Home Page</h3> */}
 
-            {projects.map(project => <ProjectCard key={project.id} project={project} pattern='list' />)}
+            {projects.length ?
+                projects.map(project => 
+                    <ProjectCard key={project.id} project={project} parent='list' />
+                )
+            :   <p>No projects available.</p>
+            }
         </div>
     );
 }

@@ -24,15 +24,10 @@ function Login() {
     const [errMsg, setErrMsg] = useState('');
     const [check, toggleCheck] = useToggle('persist', false);
 
-    const verifyPersist = () => {
-        if (!check) {
-            resetUser();
-        }
-    }
-
     useEffect(() => {
         userRef.current.focus();
-        verifyPersist();
+        !check && resetUser();
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
@@ -52,11 +47,8 @@ function Login() {
             console.log(response.data);
 
             const accessToken = response.data.token;
-            const _user = response.data.user;
-            
-            console.log(accessToken, _user); 
 
-            setAuth({'user': _user, accessToken}); 
+            setAuth({'user': response.data.user, accessToken}); 
             resetUser();
             setPwd('');
             navigate(from, { replace: true });
@@ -77,7 +69,7 @@ function Login() {
     }
 
     return (
-        <section>
+        <section className='auth-section'>  
             <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
             <h1>Sign In</h1>
             <form onSubmit={handleSubmit}>
@@ -113,7 +105,7 @@ function Login() {
             <p>
                 Need an Account?<br />
                 <span className='line'>
-                    <Link to='/register'>Sign up</Link>
+                    <Link className='auth-a'to='/register'>Sign up</Link>
                 </span>
             </p>
         </section>

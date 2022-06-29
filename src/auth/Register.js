@@ -10,7 +10,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/; // (?=.*[!@#$%])
 const MAIL_REGEX = /^(?=[a-z]*)(?=\d*).{4,10}@.+\..{2,4}$/;
 const REGISTER_URL = '/register';
 
-const Register = () => {
+function Register() {
     const { setAuth } = useAuth();
 
     const navigate = useNavigate();
@@ -112,7 +112,7 @@ const Register = () => {
     }
 
     return (
-        <section>
+        <section className='auth-section'>
             <h1>Register!</h1>
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
             <form onSubmit={handleSubmit}>
