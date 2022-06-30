@@ -1,5 +1,6 @@
 import React from "react";
-import cloud from '../icons/upcloud.svg'
+import cloud from '../icons/upcloud.svg';
+import './InputFiles.css';
 
 function InputFiles({ id, label, multiple, accept ,setValue }) {
 

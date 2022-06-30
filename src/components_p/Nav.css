@@ -27,7 +27,7 @@
     border-bottom: 2px solid #325274;
 }
 
-.user-session {
+.nav-session {
     display: flex;
     align-items: center;
     /* justify-content: space-around; */
@@ -36,7 +36,7 @@
     border-radius: 8px;
 }
 
-.user-session img {
+.nav-session img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -45,24 +45,5 @@
 
 #signout:hover {
     cursor: pointer;
-}
-
-/* || InputFiles */
-.dropzone {
-    height: 5rem;
-    width: 50%;
-    margin: 1rem auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    background-color: white;
-    border: 2px dashed black;
-    border-radius: 20px;
-}
-
-.dragover {
-    /* background-color: #d1dfef; */
-    background-color: #bad0e7;
 }
   

@@ -5,7 +5,7 @@ import InputFiles from '../components_p/InputFiles';
 import { useNavigate } from 'react-router-dom';
 
 const USER_EDIT = '/edit_user';
-const MAIL_REGEX = /.+/ ///^(?=[a-z]*)(?=\d*).{4,10}@.+\..{2,4}$/;
+const MAIL_REGEX = /^(?=[a-z]*)(?=\d*).{4,10}@.+\..{2,4}$/;
 
 function UserForm() {
 
@@ -23,8 +23,9 @@ function UserForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const inputs = JSON.stringify({username, career, email, description, 
-            // 'numero': 40
+        e.stopPropagation();
+        const inputs = JSON.stringify({
+            username, career, email, description,
         });
         let payload = new FormData();
 

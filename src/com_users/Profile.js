@@ -1,36 +1,44 @@
-import React, { useState, useEffect } from "react";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import React, { useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import ProjectCard from "../com_projects/ProjectCard";
+// import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useProf from "../hooks/useProf";
+import axios from '../api/axios';
 
-import './Users.css';
+import './Profile.css';
+import SocialSideBar from "./SocialSideBar";
+import ProjectList from "../com_projects/ProjectList";
 import SkillsList from "./SkillsList";
 
 function Profile() {
     const { userId } = useParams();
-    const [ user, setUser ] = useState();
-    const [ projects, setProjects ] = useState();
-    const [ skillg, setSkillG ] = useState();
-    const [ allSkills, setAllSkills ] = useState([]);
-    const axiosPrivate = useAxiosPrivate();
+    const { prof, setProf } = useProf();
+    const PROF_URL = `/profile/${userId}`;
+
+    // const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
         let isMounted = true;
-        const controller = new AbortController();
+        // const controller = new AbortController();
 
         const getUsers = async () => {
             try {
-                const response = await axiosPrivate.get(`/profile/${userId}`, {
-                    signal: controller.signal
-                });
+                // const response = await axiosPrivate.get(PROF_URL, {
+                //     signal: controller.signal
+                // });
+                const response = await axios(PROF_URL);
                 console.log(response.data);
-                if (isMounted) {
-                    setUser(response.data?.user);
-                    setProjects(response.data?.projects);
-                    setSkillG(response.data?.skills);
-                    setAllSkills(response.data?.all_skills);
+                if (isMounted && response.data) {
+                    const data = {
+                        user: response.data?.user,
+                        same: response.data?.same_user,
+                        projects: response.data?.projects,
+                        groups: response.data?.skills,
+                        allSkills: response.data?.all_skills,
+                        socials: response.data?.socials
+                    }
+                    setProf(data);
                 }
             } catch (err) {
                 console.error(err);
@@ -42,44 +50,36 @@ function Profile() {
 
         return () => {
             isMounted = false;
-            controller.abort();
+            // controller.abort();
         }
         // eslint-disable-next-line
     }, [userId])
 
     return (
         <div className="prof-content">
-        {user ?
+        {prof?.user ?
         <>
             <section className='prof-user'>
                 <div className='prof-banner'>
-                    <img src={user.banner} alt='Banner'/>
+                    <img src={prof.user.banner} alt='Banner'/>
                 </div>
-                <img className='prof-img' src={user.image} alt={user.name} />
+                <img className='prof-img' src={prof.user.image} alt={prof.user.name} />
                 <div className='prof-text'>
-                    <h3>{user.name}</h3>
-                    <p>{user.career}</p>
+                    <h3>{prof.user.name}</h3>
+                    <p>{prof.user.career}</p>
                 </div>
-                <p className='prof-desc'>{user.description}</p>
+                <p className='prof-desc'>{prof.user.description}</p>
                 <button className='cv'>Download CV</button>
             </section>
 
             <div className='prof-detail'>
-                <aside>
-                    Social media and data
-                </aside>
+                <SocialSideBar userId={userId} />
 
                 <section className='prof-main'>
 
-                    <SkillsList group_list={skillg} allSkills={allSkills} userId={userId} />
+                    <SkillsList userId={userId} />
 
-                    {/* <ProjectList projects={projects} /> */}
-                    {projects?.length ?
-                        projects.map((project) =>
-                            <ProjectCard key={project.id} project={project} parent='list' />
-                        )
-                        : <p>No projects to display.</p>
-                    }
+                    <ProjectList projects={prof.projects} />
                 </section>
             </div>
         </>

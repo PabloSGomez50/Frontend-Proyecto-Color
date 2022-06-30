@@ -1,9 +1,5 @@
 import './App.css';
 
-import './components/banner.css';
-import './components/topics.css';
-import './components/publication.css';
-
 // Components imports
 import Home from './components_p/Home';
 import Profile from './com_users/Profile';
@@ -12,7 +8,7 @@ import Banner from './components/Banner';
 import Topics from './components/Topics';
 import Publication from './components/Publication';
 
-import UserForm from './com_users/UserForm';
+import UserForm from './com_users/ProfileForm';
 import ProjectForm from './com_projects/ProjectForm';
 import ProjectPage from './com_projects/ProjectPage';
 
@@ -20,21 +16,19 @@ import ProjectPage from './com_projects/ProjectPage';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import RequireAuth from './auth/RequireAuth';
-
-import PersistLogin from './components_p/PersistLogin';
+import PersistLogin from './auth/PersistLogin';
 
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Nav from './components_p/Nav';
 
-
-// const rocio = {username: 'Rocio Gomez', email: 'rocio@gmail.com', password: 'vamosBoca'}
+import { ProfileProvider } from './com_users/ProfileProvider';
 
 function App() {
 
   return (
-    <div className="App">
-
+    <div> {/* className="App" */}
+    
       <Nav />
 
       <Routes>
@@ -58,7 +52,11 @@ function App() {
           } />
 
           <Route element={<RequireAuth />}>
-            <Route path='/profile/:userId' element={<Profile />} />
+              <Route path='/profile/:userId' element={
+                <ProfileProvider>
+                    <Profile />
+                </ProfileProvider>
+              } />
 
             <Route path='/user_edit' element={<UserForm />} />
             <Route path='/project_edit' element={<ProjectForm />} />
@@ -67,6 +65,8 @@ function App() {
 
       </Routes>
 
+      {/* icons by
+      <a target="_blank" href="https://icons8.com"> Icons8</a> */}
     </div>
   );
 }

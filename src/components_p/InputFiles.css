@@ -1,0 +1,16 @@
+.dropzone {
+    height: 5rem;
+    width: 50%;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: white;
+    border: 2px dashed black;
+    border-radius: 20px;
+}
+
+.dragover {
+    background-color: #bad0e7; /* #d1dfef; */
+}

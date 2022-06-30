@@ -4,6 +4,7 @@ import ProjectCard from "./ProjectCard";
 import axios from "../api/axios";
 
 import Dropdown from "../components_p/Dropdown";
+import './Project.css';
 
 function ProjectPage() {
     const { projectId } = useParams();
@@ -61,7 +62,7 @@ function ProjectPage() {
                     className='cat-thumbnail'
                     onClick={() => modCat(cat.id, 'remove')}
                 >
-                    <div></div>
+                    <div id='delete-icon'></div>
                     {cat.name}
                 </button>)
             : <span>Empty categories.</span>
@@ -73,25 +74,6 @@ function ProjectPage() {
                 array={unselected}
                 modData={modCat}
             />}
-            {/* {project.categories ? 
-                <div 
-                    className="dropdown" 
-                    onMouseEnter={() => setDropstate(true)} 
-                    onMouseLeave={() => setDropstate(false)}>
-                    <button
-                    className='cat-thumbnail'
-                    >
-                        <img src={plus} alt='plus icon' />
-                    </button>
-                    <div className={dropstate ? "dropdown-content": "dropdown-content hidden"}>
-                        {unselected.map(
-                            cat => <p key={cat.id} onClick={() => modCat(cat.id, 'add')} value={cat.id} >{cat.name}</p>
-                        )}
-                    </div>
-                </div>
-                :
-                undefined
-            } */}
             
             <ProjectCard project={project} />
         </>

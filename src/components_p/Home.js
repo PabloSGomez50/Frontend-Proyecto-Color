@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../api/axios';
-import ProjectCard from '../com_projects/ProjectCard';
 
-import './Components.css';
+import ProjectList from '../com_projects/ProjectList';
 
-const PROJECT_URL = '/project_list';
+import './Home.css';
+
 
 function Home() {
 
+    const PROJECT_URL = '/project_list';
     const [ projects, setProjects ] = useState([]);
 
     useEffect(() => {
@@ -19,7 +20,7 @@ function Home() {
                 console.log(response?.data);
                 isMounted && setProjects(response.data?.projects);
             } catch (err) {
-                console.error(err);
+                console.error(err.response.data);
             }
         }
 
@@ -31,15 +32,8 @@ function Home() {
     }, [])
 
     return (
-        <div>
-            {/* <h3>This is the Home Page</h3> */}
-
-            {projects.length ?
-                projects.map(project => 
-                    <ProjectCard key={project.id} project={project} parent='list' />
-                )
-            :   <p>No projects available.</p>
-            }
+        <div className='project-list'>
+            <ProjectList projects={projects} />
         </div>
     );
 }

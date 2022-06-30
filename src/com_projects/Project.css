@@ -3,12 +3,13 @@
     display: inline-flex;
     flex-direction: row;
     justify-content: space-around;
-    padding: 4px 10px;
-    border: 1px solid black;
+    padding: 8px 16px;
+    /* border: 1px solid black; */
+    border: none;
     background-color: white;
 }
 
-.cat-thumbnail div {
+#delete-icon {
     height: 24px;
     width: 24px;
     margin-right: 4px;
@@ -16,38 +17,7 @@
     border-radius: 50%;
 }
 
-.cat-thumbnail:hover div {
+.cat-thumbnail:hover #delete-icon {
     background-image: url('../icons/remove.svg');
     background-color: white;
-    /* border: 1px solid black; */
-}
-
-/* || Project Card */
-.card {
-    display: flex;
-    justify-content: center;
-    margin: 2rem;
-    background-color: #ebef99;
-}
-
-.user-thumbnail {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background-color: orange;
-    margin: 0 0.5rem;
-    padding: 4px;
-    border-radius: 10px;
-    border: none;
-}
-
-.user-thumbnail img {
-    border-radius: 50%;
-    margin: 0.25rem;
-    border: solid 2px black;
-}
-
-.project-title:hover {
-    color: white;
-    cursor: pointer;
 }

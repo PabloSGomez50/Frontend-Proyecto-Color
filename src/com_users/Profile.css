@@ -1,7 +1,11 @@
 .prof-content {
+    margin: 32px 16px 0 16px;
+    padding-top: 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 24px 24px 0 0;
 }
 
 .prof-user {
@@ -16,7 +20,6 @@
 
 .prof-banner {
     width: 100%;
-    z-index: -1;
     grid-column: 1 / 5;
     grid-row: 1 / 3;
     overflow-y: hidden;
@@ -53,27 +56,23 @@
     overflow: hidden;
 }
 
-/* || Projects and Social media */
+/* || Projects */
 .prof-detail {
     width: 100%;
     display: flex;
-    gap: 24px;
     justify-content: center;
+    margin: 0 5vw;
+    gap: 4vw;
 
-}
-
-aside {
-    width: 30vh;
-    text-align: center;
-    background-color: blue;
 }
 
 .prof-main {
-    /* width: max-content; */
+    width: 72vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: gray;
+    background-color: #d5dbdf;
+    border-radius: 24px 24px 0 0;
 }
 
 .cv {

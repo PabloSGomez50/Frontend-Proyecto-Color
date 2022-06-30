@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useLogout from '../hooks/useLogout';
 
-import an_user from '../icons/an_account.svg';
+import './Nav.css';
 import pageicon from '../img/page_logo.png';
+import an_user from '../icons/an_account.svg';
 import logouticon from '../icons/logout.svg';
 
 function Nav() {
@@ -12,7 +13,7 @@ function Nav() {
     const logout = useLogout();
 
     const { auth } = useAuth();
-    const user = auth.user;
+    const [ pid, setPid ] = useState(2);
   
     const signOut = async () => {
         try {
@@ -23,23 +24,39 @@ function Nav() {
             navigate('/');
         }
     }
+
+    const navProf = () => {
+        navigate(`/profile/${auth.user.id}`);
+    }
   
+    useEffect(() => {
+        auth.user?.id ? setPid(auth.user.id) : setPid(2);
+    }, [auth])
+
     return (
         <nav className='navbar'>
             <img src={pageicon} alt='page logo' />
             <div className='nav-list'>
-                <NavLink to='/profile/2'    className='nav-item' >Profile</NavLink>
-                <NavLink to='/user_edit'    className='nav-item' >Edit User</NavLink>
-                <NavLink to='/'             className='nav-item' >Home</NavLink>
-                <NavLink to='/project/3'    className='nav-item' >Project 3</NavLink>
-                {/* <NavLink to='/components'>Components</NavLink> */}
-                <NavLink to='/project_edit' className='nav-item' >Edit Project</NavLink>
+                {auth.user ?
+                <>
+                    <NavLink to={`/profile/${pid}`}    className='nav-item' >Profile</NavLink>
+                    <NavLink to='/user_edit'    className='nav-item' >Edit User</NavLink>
+                    <NavLink to='/'             className='nav-item' >Home</NavLink>
+                    <NavLink to='/project/3'    className='nav-item' >Project 3</NavLink>
+                    {/* <NavLink to='/components'>Components</NavLink> */}
+                    <NavLink to='/project_edit' className='nav-item' >Edit Project</NavLink>
+                </>
+                :
+                <>
+                    <NavLink to='/' className='nav-item' >Home</NavLink>
+                </>
+                }
             </div>
-            <div className='user-session'>
-                {user ?
+            <div className='nav-session'>
+                {auth.user ?
                     <>
-                        <img src={user.image} alt={user.name}/>
-                        <span>{user.name}</span>
+                        <img onClick={navProf}src={auth.user.image} alt={auth.user.name} />
+                        <span onClick={navProf}>{auth.user.name}</span>
                         <img src={logouticon} alt='Sign Out' onClick={signOut} id='signout'/>
                     </>
                      : 

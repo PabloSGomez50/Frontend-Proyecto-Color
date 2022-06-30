@@ -2,6 +2,7 @@ import React from 'react';
 import avatar from '../img/avatar.png'
 import project from '../img/IoTProject.jpg'
 
+import './publication.css';
 
 function Publication(){
     return(
