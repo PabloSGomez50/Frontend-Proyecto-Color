@@ -4,7 +4,8 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/axios';
 
-import './auth.css';
+import CheckIcon from '../icons/check_g.svg';
+import InvalidIcon from '../icons/remove_r.svg';
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,24}$/; // (?=.*[!@#$%])
@@ -107,20 +108,25 @@ function Register() {
             navigate(from, { replace: true });
 
         } catch (err) {
-            setErrMsg(err?.response?.status);
+            setErrMsg(err.code); // err?.response?.data
             errRef.current.focus();
+            console.error(err);
         }
     }
 
     return (
         <section className='auth-section'>
             <h1>Register!</h1>
+
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-            <form onSubmit={handleSubmit}>
+            
+            <form onSubmit={handleSubmit} className='auth-form'>
                 <label htmlFor="username">
-                    Username:
-                    <span className={validName ? "valid" : "hide"}>Valid</span>
-                    <span className={validName || !user ? "hide" : "invalid"}>Invalid</span>
+                    Username
+                    {/* <span className={validName ? "valid" : "hide"}>Valid</span>
+                    <span className={validName || !user ? "hide" : "invalid"}>Invalid</span> */}
+                    <img className={validName ? "valid icon" : "hide"} src={CheckIcon} alt='Valid'/>
+                    <img className={validName || !user ? "hide" : "invalid icon"} src={InvalidIcon} alt='Invalid' />
                 </label>
                 <input
                     type="text"
@@ -142,9 +148,12 @@ function Register() {
                 </p>
 
                 <label htmlFor="email">
-                    Email:
-                    <span className={validMail ? "valid" : "hide"}>Valid</span>
-                    <span className={validMail || !mail ? "hide" : "invalid"}>Invalid</span>
+                    Email
+                    {/* <span className={validMail ? "valid" : "hide"}>Valid</span>
+                    <span className={validMail || !mail ? "hide" : "invalid"}>Invalid</span> */}
+                    <img className={validMail ? "valid icon" : "hide"} src={CheckIcon} alt='Valid'/>
+                    <img className={validMail || !mail ? "hide" : "invalid icon"} src={InvalidIcon} alt='Invalid' />
+
                 </label>
                 <input
                     type="email"
@@ -164,9 +173,11 @@ function Register() {
                 </p>
 
                 <label htmlFor="password">
-                    Password:
-                    <span className={validPwd ? "valid" : "hide"}>Valid</span>
-                    <span className={validPwd || !pwd ? "hide" : "invalid"}>Invalid</span>
+                    Password
+                    {/* <span className={validPwd ? "valid" : "hide"}>Valid</span>
+                    <span className={validPwd || !pwd ? "hide" : "invalid"}>Invalid</span> */}
+                    <img className={validPwd ? "valid icon" : "hide"} src={CheckIcon} alt='Valid'/>
+                    <img className={validPwd || !pwd ? "hide" : "invalid icon"} src={InvalidIcon} alt='Invalid' />
                 </label>
                 <input
                     type="password"
@@ -186,9 +197,11 @@ function Register() {
                 </p>
 
                 <label htmlFor="confirm_pwd">
-                    Confirm Password:
-                    <span className={validMatch && matchPwd ? "valid" : "hide"}>Valid</span>
-                    <span className={validMatch || !matchPwd ? "hide" : "invalid"}>Invalid</span>
+                    Confirm Password
+                    {/* <span className={validMatch && matchPwd ? "valid" : "hide"}>Valid</span>
+                    <span className={validMatch || !matchPwd ? "hide" : "invalid"}>Invalid</span> */}
+                    <img className={validMatch && matchPwd ? "valid icon" : "hide"} src={CheckIcon} alt='Valid'/>
+                    <img className={validMatch || !matchPwd ? "hide" : "invalid icon"} src={InvalidIcon} alt='Invalid' />
                 </label>
                 <input
                     type="password"
@@ -205,13 +218,13 @@ function Register() {
                     Must match the first password input field.
                 </p>
 
-                <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                <button className='auth-button' disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
             </form>
 
-            <p>
+            <p className="auth-link">
                 Already registered?<br />
-                <span className="line">
-                    <Link to="/login">Sign In</Link>
+                <span>
+                    <Link to="/login" className='auth-a'>Sign In</Link>
                 </span>
             </p>
         </section>

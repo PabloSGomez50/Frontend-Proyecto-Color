@@ -5,7 +5,6 @@ import useToggle from '../hooks/useToggle';
 
 import useAuth from '../hooks/useAuth';
 import { axiosPrivate } from '../api/axios';
-import './auth.css';
 
 const LOG_URL = '/login';
 
@@ -72,8 +71,8 @@ function Login() {
         <section className='auth-section'>  
             <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live='assertive'>{errMsg}</p>
             <h1>Sign In</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='username'>Username:</label>
+            <form className='auth-form' onSubmit={handleSubmit}>
+                <label htmlFor='username'>Username</label>
                 <input
                     type='text'
                     id='username'
@@ -83,7 +82,7 @@ function Login() {
                     required
                 />
 
-                <label htmlFor='password'>Password:</label>
+                <label htmlFor='password'>Password</label>
                 <input
                     type='password'
                     id='password'
@@ -91,7 +90,7 @@ function Login() {
                     value={pwd}
                     required
                 />
-                <button>Sign In</button>
+
                 <div className='persistCheck'>
                     <input
                         type='checkbox'
@@ -101,11 +100,13 @@ function Login() {
                     />
                     <label htmlFor='persist'>Trust This Device</label>
                 </div>
+
+                <button className='auth-button'>Sign In</button>
             </form>
-            <p>
+            <p className="auth-link">
                 Need an Account?<br />
-                <span className='line'>
-                    <Link className='auth-a'to='/register'>Sign up</Link>
+                <span>
+                    <Link className='auth-a' to='/register'>Sign up!</Link>
                 </span>
             </p>
         </section>

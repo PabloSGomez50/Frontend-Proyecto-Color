@@ -1,3 +1,11 @@
+/* Test CSS */
+#description {
+    width: 50%;
+    height: clamp(4rem, 8rem, 10rem);
+    border: 0;
+    border-bottom: solid 4px #bad0e7;
+}
+/* Finish Test CSS */
 .prof-content {
     margin: 32px 16px 0 16px;
     padding-top: 16px;

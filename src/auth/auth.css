@@ -1,88 +1,60 @@
+.auth-display {
+    height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .auth-section {
     width: 100%;
-    max-width: 420px;
+    height: 100%;
     min-height: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    padding: 1rem;
-    background-color: rgba(0,0,0,0.4);
-    margin: auto;/* Agrego el margin auto para que quede centrado, se puede agregar un div 
-                    externo al section con display flex que cumpla la misma funcion*/
+    justify-content: center;
+    padding: 1.5rem;
 }
 
-form {
+.auth-line {
+    border-right: solid 3px black;
+}
+
+.auth-form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    flex-grow: 1;
+    align-items: center;
     padding-bottom: 1rem;
 }
 
+.auth-form > label, .persistCheck{
+    width: 54%;
+}
+
+.auth-form > input{
+    width: 50%;
+    margin: 0.25rem 0 0.5rem 2%;
+    /* border-radius: 0.25rem; */
+    border: 0;
+    border-bottom: solid 4px #bad0e7;
+    outline: 0;
+}
+
+.auth-button {
+    width: 25%;
+    background-color: white;
+}
+
+.auth-link {
+    margin-left: 3rem;
+
+}
+
 .auth-a, .auth-a:visited {
-    background-color: gainsboro;
+    min-width: 120px;
+    /* background-color: gainsboro;
     color: rgb(18, 28, 39);
     margin: auto 0.5rem;
     padding: .5em 0;
-    min-width: 120px;
-    text-align: center;
+    text-align: center; */
 }
-
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="url"],
-button,
-textarea {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-}
-
-button {
-  /* min-width: 115px; */
-  margin: .1em;
-}
-
-.instructions {
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    background: #000;
-    color: #fff;
-    padding: 0.25rem;
-    position: relative;
-    bottom: -10px;
-}
-
-.instructions > svg {
-    margin-right: 0.25rem;
-}
-
-.offscreen {
-    position: absolute;
-    left: -9999px;
-}
-
-.valid {
-    color: limegreen;
-    margin-left: 0.25rem;
-}
-
-.invalid {
-    color: red;
-    margin-left: 0.25rem;
-}
-
-.errmsg {
-    background-color: lightpink;
-    color: firebrick;
-    font-weight: bold;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.line {
-    display: inline-block;
-}
-

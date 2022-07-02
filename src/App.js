@@ -13,8 +13,7 @@ import ProjectForm from './com_projects/ProjectForm';
 import ProjectPage from './com_projects/ProjectPage';
 
 // Auth imports 
-import Login from './auth/Login';
-import Register from './auth/Register';
+import Auth from './auth/Auth';
 import RequireAuth from './auth/RequireAuth';
 import PersistLogin from './auth/PersistLogin';
 
@@ -37,11 +36,11 @@ function App() {
 
           <Route path='/project/:projectId' element={<ProjectPage />} />
 
-          <Route path='/login' element={<Login />} />
+          <Route path='/login' element={<Auth action='login'/>} />
 
-          <Route path='/register' element={<Register />} />
+          <Route path='/register' element={<Auth action='register' />} />
 
-          <Route path='/components' element={
+          {/* <Route path='/components' element={
             <div className='container'>
               <NavBar />
               <Banner />
@@ -49,7 +48,7 @@ function App() {
               <Topics />
               <Publication />
             </div>
-          } />
+          } /> */}
 
           <Route element={<RequireAuth />}>
               <Route path='/profile/:userId' element={

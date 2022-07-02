@@ -64,7 +64,7 @@ function UserForm() {
     }, [files]);
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='auth-form'>
             
             <label htmlFor='username'>Username:</label>
             <input 

@@ -99,7 +99,7 @@ function ProjectForm() {
     }, [])
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='auth-form'>
             <img src={project.image} alt={project.title} height='300' width='300'/>
             <label htmlFor='title'>Title:</label>
             <input 
